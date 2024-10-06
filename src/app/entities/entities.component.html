@@ -1,0 +1,54 @@
+<div class="container mt-5">
+    <h2 class="text-center">Gestión de Entidades</h2>
+
+    <!-- Crear nueva entidad -->
+    <div class="row mt-4">
+        <div class="col-md-8">
+            <input type="text" class="form-control" placeholder="Nombre de la nueva entidad"
+                [(ngModel)]="newEntityName" />
+        </div>
+        <div class="col-md-4">
+            <button class="btn btn-success w-100" (click)="createEntity()">
+                Crear Entidad
+            </button>
+        </div>
+    </div>
+
+    <!-- Listar todas las entidades -->
+    <ul class="list-group mt-5">
+        <li *ngFor="let entity of entities" class="list-group-item">
+            <!-- Mostrar entidad si no está en modo edición -->
+            <span *ngIf="selectedEntity?.id !== entity.id">{{ entity.name }}</span>
+
+            <!-- Editar entidad -->
+            <input *ngIf="selectedEntity?.id === entity.id" type="text" [(ngModel)]="selectedEntity.name"
+                class="form-control" />
+
+            <!-- Botones de acción -->
+            <div class="float-end">
+                <!-- Editar -->
+                <button *ngIf="selectedEntity?.id !== entity.id" class="btn btn-primary btn-sm me-2"
+                    (click)="selectEntity(entity)">
+                    Editar
+                </button>
+
+                <!-- Guardar cambios -->
+                <button *ngIf="selectedEntity?.id === entity.id" class="btn btn-success btn-sm me-2"
+                    (click)="updateEntity()">
+                    Guardar
+                </button>
+
+                <!-- Cancelar edición -->
+                <button *ngIf="selectedEntity?.id === entity.id" class="btn btn-secondary btn-sm me-2"
+                    (click)="cancelEdit()">
+                    Cancelar
+                </button>
+
+                <!-- Eliminar -->
+                <button class="btn btn-danger btn-sm" (click)="deleteEntity(entity.id)">
+                    Eliminar
+                </button>
+            </div>
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,77 @@
+<div class="container mt-5">
+    <h2 class="text-center">Gestión de Empleados</h2>
+
+    <!-- Crear nuevo empleado -->
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <input type="text" class="form-control" placeholder="Nombre del empleado" [(ngModel)]="newEmployee.name" />
+        </div>
+        <div class="col-md-3">
+            <input type="text" class="form-control" placeholder="Rol del empleado (ej: admin, user)"
+                [(ngModel)]="newEmployee.role" />
+        </div>
+        <div class="col-md-3">
+            <!-- Select para la entidad -->
+            <select class="form-control" [(ngModel)]="newEmployee.entity_id" placeholder="Entidad">
+                <option value="null" disabled selected>Selecciona una entidad</option>
+                <option *ngFor="let entity of entities" [value]="entity.id">
+                    {{ entity.name }}
+                </option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-success w-100" (click)="createEmployee()">
+                Crear Empleado
+            </button>
+        </div>
+    </div>
+
+    <!-- Listar todos los empleados -->
+    <ul class="list-group mt-5">
+        <li *ngFor="let employee of employees" class="list-group-item">
+            <!-- Mostrar empleado si no está en modo edición -->
+            <span *ngIf="selectedEmployee?.id !== employee.id">
+                {{ employee.name }} ({{ employee.role }}) - Entidad ID: {{ employee.entity_id }}
+            </span>
+
+            <!-- Editar empleado -->
+            <div *ngIf="selectedEmployee?.id === employee.id">
+                <input type="text" [(ngModel)]="selectedEmployee.name" class="form-control mb-2" />
+                <input type="text" [(ngModel)]="selectedEmployee.role" class="form-control mb-2" />
+
+                <!-- Select de entidad para la edición -->
+                <select class="form-control" [(ngModel)]="selectedEmployee.entity_id">
+                    <option *ngFor="let entity of entities" [value]="entity.id">
+                        {{ entity.name }}
+                    </option>
+                </select>
+            </div>
+
+            <!-- Botones de acción -->
+            <div class="float-end">
+                <!-- Editar -->
+                <button *ngIf="selectedEmployee?.id !== employee.id" class="btn btn-primary btn-sm me-2"
+                    (click)="selectEmployee(employee)">
+                    Editar
+                </button>
+
+                <!-- Guardar cambios -->
+                <button *ngIf="selectedEmployee?.id === employee.id" class="btn btn-success btn-sm me-2"
+                    (click)="updateEmployee()">
+                    Guardar
+                </button>
+
+                <!-- Cancelar edición -->
+                <button *ngIf="selectedEmployee?.id === employee.id" class="btn btn-secondary btn-sm me-2"
+                    (click)="cancelEdit()">
+                    Cancelar
+                </button>
+
+                <!-- Eliminar -->
+                <button class="btn btn-danger btn-sm" (click)="deleteEmployee(employee.id)">
+                    Eliminar
+                </button>
+            </div>
+        </li>
+    </ul>
+</div>

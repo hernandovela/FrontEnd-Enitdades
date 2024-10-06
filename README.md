@@ -12,8 +12,8 @@ Este proyecto utiliza Angular para el desarrollo del frontend de la aplicación.
 
 1. Clonar el repositorio:
    ```bash
-   git clone https://github.com/tu_usuario/tu_proyecto.git
-   cd tu_proyecto/frontend
+   git clone https://github.com/hernandovela/FrontEnd-Enitdades.git
+   cd FrontEnd-Enitdades
    ```
 
 2. Instalar las dependencias:
